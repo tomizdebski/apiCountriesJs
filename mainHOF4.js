@@ -67,18 +67,21 @@ async function languageRegion(langUrl, region){
 }
 
 function language(url, region){
-    let arrayLanguage = [];
+        let arrayLang = []; 
   
         fetch("https://restcountries.com/v3.1/all?fields=languages")
         .then(request => request.json())
         .then(res => res.map(el => el.languages))
-        .then(lang => lang.map(el => arrayLanguage.push(el)));
-        
-    console.log(arrayLanguage);
-    arrayLanguage.forEach(el => console.log(el));
-      
-}
-
+        .then(lang => lang.map(item => Object.values(item)))
+        .then(el => {
+            
+            el.map(elm => arrayLang.push(...elm));
+            return arrayLang;
+        })
+        .then(res => new Set(res))
+        .then(res => console.log(res));
+       
+      }
 /////WYWOŁANIA//////////////////////////////////////////////////////////////
 
 peopleMore37M();
